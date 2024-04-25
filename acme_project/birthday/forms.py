@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
 
 from .models import Birthday
 
@@ -27,4 +28,12 @@ class BirthdayForm(forms.ModelForm):
         if f'{first_name} {last_name}' in BEATLES:
             raise ValidationError(
                 'Мы тоже любим Битлз, но введите, пожалуйста, настоящее имя!'
+            )
+        else:
+            send_mail(
+                subject='new member',
+                message=f'{first_name} {last_name} опубликовал запись!',
+                from_email='birthday_form@acme.not',
+                recipient_list=['to@example.com'],
+                fail_silently=True,
             )
