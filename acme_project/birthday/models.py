@@ -1,14 +1,22 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 
 from .validators import real_age
 
+User = get_user_model()
+
 
 class Birthday(models.Model):
     first_name = models.CharField('Имя', max_length=20)
-    last_name = models.CharField('Фамилия', blank=True, help_text='Необязательное поле', max_length=20)
+    last_name = models.CharField(
+        'Фамилия', blank=True, help_text='Необязательное поле', max_length=20
+    )
     birthday = models.DateField('День рождения', validators=(real_age,))
     image = models.ImageField('Фото', upload_to='birthday_images', blank=True)
+    author = models.ForeignKey(
+        User, verbose_name='', on_delete=models.CASCADE, null=True
+    )
 
     class Meta:
         constraints = (
