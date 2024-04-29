@@ -30,7 +30,7 @@ class Birthday(models.Model):
         return reverse('birthday:detail', kwargs={'pk': self.pk})
 
 
-class Congratulations(models.Model):
+class Congratulation(models.Model):
     text = models.TextField('Текст поздравления')
     birthday = models.ForeignKey(
         Birthday,
